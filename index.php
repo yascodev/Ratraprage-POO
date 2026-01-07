@@ -1,13 +1,17 @@
 <?php
 
-$handle = fopen(__DIR__ . '/input.csv', 'r');
-$row = fgetcsv($handle, 1000, ',', '"', '\\');
-$input = [];
-while($row !== false) {
-    $input[] = $row;
-    $row = fgetcsv($handle, 1000, ',', '"', '\\');
+require_once 'CsvReader.php';
+
+$reader = new CsvReader();
+$inputData = $reader->read(__DIR__ . '/input.csv');
+
+$localisationLeftList = [];
+$localisationRightList = [];
+
+foreach($inputData as $row) {
+    $localisationLeftList[] = $row[0];
+    $localisationRightList[] = $row[1];
 }
-fclose($handle);
 
 $localisationLeftList = [];
 $localisationRightList = [];
