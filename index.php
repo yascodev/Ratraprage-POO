@@ -1,6 +1,7 @@
 <?php
 
 require_once 'CsvReader.php';
+require_once 'LocationService.php';
 
 $reader = new CsvReader();
 $inputData = $reader->read(__DIR__ . '/input.csv');
@@ -8,24 +9,8 @@ $inputData = $reader->read(__DIR__ . '/input.csv');
 $localisationLeftList = [];
 $localisationRightList = [];
 
-foreach($inputData as $row) {
-    $localisationLeftList[] = $row[0];
-    $localisationRightList[] = $row[1];
-}
-
-$localisationLeftList = [];
-$localisationRightList = [];
-
-foreach($input as $row) {
-    $localisationLeftList[] = $row[0];
-    $localisationRightList[] = $row[1];
-}
-
-$input = [$localisationLeftList, $localisationRightList];
-
-for($i = 0; $i < count($input); $i++) {
-    sort($input[$i]);
-}
+$locationService = new LocationService();
+$input = $locationService->parseAndSort($inputData);
 
 file_put_contents(__DIR__ . '/sortedInput.json', json_encode($input, JSON_PRETTY_PRINT));
 
