@@ -1,9 +1,11 @@
 <?php
-require_once 'CsvReader.php';
-require_once 'LocationService.php';
-require_once 'SimilarityCalculator.php';
-require_once 'JsonExporter.php';
-require_once 'App.php';
+
+spl_autoload_register(function ($class_name) {
+    $file = __DIR__ . '/' . $class_name . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+    }
+});
 
 $app = new App();
 $app->run();
